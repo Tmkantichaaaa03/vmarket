@@ -1,27 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>Seller Dashboard</title>
-
+    <title>แผงควบคุมร้านค้า</title>
+    <link rel="stylesheet" href="../seller_panel/css/dashboard.css">
 </head>
 <body>
-    <div class="container">
-        <h2>Welcome, <span id="shopNameDisplay">Shop</span>!</h2>
 
-        <p>This is your Seller Panel Dashboard. Choose an option to manage your store.</p>
-        
-        <div class="dashboard-links">
-            <h3>Management Links:</h3>
-            <ul>
-                <li><a href="products.html">Manage Products (สินค้าของฉัน)</a></li>
-                <li><a href="orders.html">Manage Orders (คำสั่งซื้อ)</a></li>
-            </ul>
+    <!-- ===== Top Menu ===== -->
+    <nav class="top-menu pixel-text">
+        <div class="logo">SELLER PANEL</div>
+        <ul>
+            <li><a href="#" class="active">จัดการสินค้า</a></li>
+            <li><a href="orders.html">จัดการคำสั่งซื้อ</a></li>
+            <li><a href="#" onclick="logout()" class="logout">ออกจากระบบ</a></li>
+        </ul>
+    </nav>
+
+    <!-- ===== Main Content ===== -->
+    <main class="content">
+
+        <div class="container wide">
+            <h2 class="pixel-text">จัดการสินค้า</h2>
+
+            <p class="shop-name pixel-text">
+                ร้านค้า: <span id="shopNameDisplay"></span>
+            </p>
+
+            <a href="add_product.html" class="button pixel-text">
+              เพิ่มสินค้าใหม่
+            </a>
+
+            <h3 class="pixel-text">รายการสินค้าของฉัน</h3>
+
+            <table id="productListTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>ชื่อสินค้า</th>
+                        <th>ราคา</th>
+                        <th>สต็อก</th>
+                        <th>สถานะ</th>
+                        <th>การจัดการ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- JS เติมข้อมูล -->
+                </tbody>
+            </table>
+
+            <p id="productMessage" class="message"></p>
         </div>
-        
-        <button onclick="logout()">Log Out</button>
-    </div>
+
+    </main>
 
     <script src="js/main.js"></script>
+    <script>
+        window.onload = function () {
+            checkAuth();
+            displayShopName();
+            loadSellerProducts();
+        };
+    </script>
+
 </body>
 </html>

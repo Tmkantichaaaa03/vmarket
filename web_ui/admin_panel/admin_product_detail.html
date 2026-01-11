@@ -3,19 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin - Product Review</title>
-    <link rel="stylesheet" href="../seller_panel/css/style.css">
-    <style>
-        .detail-box { border: 1px solid #ddd; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-        .detail-box p { margin: 5px 0; }
-        .detail-box strong { display: inline-block; width: 140px; }
-        #productImage { max-width: 100%; height: auto; margin-top: 10px; border: 1px solid #eee; }
-        .status-pending { color: orange; font-weight: bold; }
-        #adminActionForm { margin-top: 20px; padding-top: 20px; border-top: 1px solid #ccc; }
-        /* Style สำหรับรูป Detail Images */
-        #detailImageList img { max-width: 150px; height: auto; border: 1px solid #ccc; }
-    </style>
+    <link rel="stylesheet" href="../admin_panel/css/admin_product_detail.css">
+    
 </head>
 <body>
+    <nav class="top-menu pixel-text">
+        <div class="logo">ADMIN PANEL</div>
+        <ul>
+            <li><a href="#" onclick="logout()" class="logout">ออกจากระบบ</a></li>
+        </ul>
+    </nav>
     <div class="container" id="admin-dashboard-detail" style="width: 700px; display: none;">
         <h2>Product Review: <span id="productName">Loading...</span></h2>
         

@@ -243,8 +243,9 @@ async function loadProductDetail() {
             
             // จัดการ Status
             const statusElement = document.getElementById('detailApprovalStatus');
-            statusElement.textContent = product.approval_status;
-            statusElement.className = 'status-' + product.approval_status;
+            statusElement.textContent = 'สถานะสินค้า: ' + product.approval_status;
+            statusElement.className = 'status-box status-' + product.approval_status;
+
             
             // แสดงรูปภาพ (ถ้ามี URL รูปภาพ)
             const imgElement = document.getElementById('productImage');

@@ -3,42 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>Product Details</title>
-    <link rel="stylesheet" href="css/style.css">
-    <style>
-        .detail-box { border: 1px solid #ddd; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-        .detail-box p { margin: 5px 0; }
-        .detail-box strong { display: inline-block; width: 120px; }
-        #productImage { max-width: 100%; height: auto; margin-top: 10px; border: 1px solid #eee; }
-        .status-approved { color: green; font-weight: bold; }
-        .status-pending { color: orange; font-weight: bold; }
-        .status-rejected { color: red; font-weight: bold; }
-    </style>
+    <link rel="stylesheet" href="../seller_panel/css/product_detail.css">
+    
 </head>
 <body>
-    <div class="container" style="width: 600px;">
-        <h2>Product Details: <span id="productName">Loading...</span></h2>
-        <p>Shop: <span id="shopNameDisplay"></span></p>
-        
-        <div id="productDetailContainer">
-            <div id="detailMessage" class="message" style="margin-bottom: 20px;">Loading product details...</div>
-            
-            <div class="detail-box">
-                <p><strong>Product ID:</strong> <span id="detailProductId"></span></p>
-                <p><strong>Approval Status:</strong> <span id="detailApprovalStatus"></span></p>
-                <hr>
-                <p><strong>Description:</strong> <span id="detailDescription"></span></p>
-                <p><strong>Price:</strong> <span id="detailPrice"></span> บาท</p>
-                <p><strong>Stock:</strong> <span id="detailStock"></span> units</p>
-                <hr>
-                <p><strong>Image File:</strong> <span id="detailImage"></span></p>
-                <p><strong>3D Model File:</strong> <span id="detailModel3D"></span></p>
-                
-                <img id="productImage" src="" alt="Product Image Preview" style="display: none;">
-            </div>
+    <nav class="top-menu pixel-text">
+        <div class="logo">SELLER PANEL</div>
+        <ul>
+            <li><a href="dashboard.html" class="active">จัดการสินค้า</a></li>
+            <li><a href="orders.html">จัดการคำสั่งซื้อ</a></li>
+            <li><a href="#" onclick="logout()" class="logout">ออกจากระบบ</a></li>
+        </ul>
+    </nav>
+
+    <div class="container" style="width:600px">
+        <h2>รายละเอียดสินค้า: <span id="productName">กำลังโหลด...</span></h2>
+        <p class="shop-name">ร้านค้า: <span id="shopNameDisplay"></span></p>
+
+        <div id="detailMessage" class="message">กำลังโหลดข้อมูลสินค้า...</div>
+
+        <div id="detailApprovalStatus" class="status-box"></div>
+
+        <div class="detail-grid">
+            <strong>รหัสสินค้า</strong><span id="detailProductId"></span>
+            <strong>ราคา</strong><span><span id="detailPrice"></span> บาท</span>
+            <strong>คงเหลือ</strong><span id="detailStock"></span>
         </div>
-        
-        <a href="products.html">Back to Product List</a> | <a href="#" onclick="logout()">Log Out</a>
+
+        <div class="description-box">
+            <strong>รายละเอียดสินค้า</strong>
+            <p id="detailDescription"></p>
+        </div>
+
+        <img id="productImage" style="display:none;">
+
+        <p><strong>ไฟล์ 3D:</strong> <span id="detailModel3D"></span></p>
+
+        <div class="detail-links">
+            <a href="dashboard.html">⬅ กลับหน้ารายการสินค้า</a>
+            <a href="#" onclick="logout()">ออกจากระบบ</a>
+        </div>
     </div>
+
 
     <script src="js/main.js"></script>
     <script>

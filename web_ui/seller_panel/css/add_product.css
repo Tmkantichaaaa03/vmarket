@@ -1,0 +1,162 @@
+/* ===== Page Background ===== */
+body {
+    background: #f7f7f7;
+}
+
+
+.top-menu {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 64px;
+    background-color: #ffffff;
+    border-bottom: 4px solid #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+    z-index: 100;
+}
+
+.top-menu .logo {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.top-menu ul {
+    list-style: none;
+    display: flex;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+}
+
+.top-menu a {
+    padding: 8px 14px;
+    background-color: #fff;
+    border: 3px solid #000;
+    color: #111;
+    text-decoration: none;
+    font-size: 12px;
+    box-shadow: 3px 3px 0 #000;
+    transition: all 0.15s ease;
+}
+
+
+.top-menu a:hover,
+.top-menu a.active {
+    background-color: #000000;
+    color: #fff;
+}
+
+.top-menu .logout {
+    background-color: #ff4d6d;
+    color: #fff;
+}
+
+/* ===== Container ===== */
+.container {
+    background: #ffffff;
+    border: 3px solid #000;
+    box-shadow: 6px 6px 0 #000;
+    padding: 28px;
+}
+
+/* ===== Heading ===== */
+h2 {
+    font-size: 20px;
+    margin-bottom: 6px;
+    color: #111;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #444;
+}
+
+/* ===== Form ===== */
+form {
+    margin-top: 10px;
+}
+
+/* ===== Form Group ===== */
+.form-group {
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: #111;
+}
+
+/* ===== Inputs ===== */
+input[type="text"],
+input[type="number"],
+textarea,
+input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    font-family: inherit;
+    font-size: 13px;
+    border: 2px solid #000;
+    background: #fff;
+    box-shadow: 3px 3px 0 #000;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    background: #fdfdfd;
+}
+
+/* ===== File Input ===== */
+input[type="file"] {
+    padding: 8px;
+    cursor: pointer;
+}
+
+/* ===== Button ===== */
+button[type="submit"] {
+    width: 100%;
+    margin-top: 10px;
+    padding: 14px;
+    font-size: 14px;
+    font-family: inherit;
+    background: #000;
+    color: #fff;
+    border: 3px solid #000;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 #000;
+}
+
+button[type="submit"]:hover {
+    background: #222;
+}
+
+/* ===== Message ===== */
+.message {
+    margin-top: 12px;
+    font-size: 13px;
+    text-align: center;
+    color: #e11d48;
+}
+
+/* ===== Back Links ===== */
+.back-links {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.back-links a {
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.back-links a:hover {
+    text-decoration: underline;
+}
