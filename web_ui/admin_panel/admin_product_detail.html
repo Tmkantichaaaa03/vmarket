@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Product Review</title>
+    <link rel="stylesheet" href="../seller_panel/css/style.css">
+    <style>
+        .detail-box { border: 1px solid #ddd; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        .detail-box p { margin: 5px 0; }
+        .detail-box strong { display: inline-block; width: 140px; }
+        #productImage { max-width: 100%; height: auto; margin-top: 10px; border: 1px solid #eee; }
+        .status-pending { color: orange; font-weight: bold; }
+        #adminActionForm { margin-top: 20px; padding-top: 20px; border-top: 1px solid #ccc; }
+        /* Style สำหรับรูป Detail Images */
+        #detailImageList img { max-width: 150px; height: auto; border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <div class="container" id="admin-dashboard-detail" style="width: 700px; display: none;">
+        <h2>Product Review: <span id="productName">Loading...</span></h2>
+        
+        <div id="detailMessage" class="message" style="margin-bottom: 20px;">Loading product details...</div>
+        
+        <div class="detail-box">
+            <h3>Seller Information</h3>
+            <p><strong>Seller ID:</strong> <span id="detailSellerId"></span></p>
+            <p><strong>Cover Image:</strong> <span id="detailImage"></span></p>
+            <img id="productImage" src="" alt="Product Cover Image Preview" style="display: none;">
+        </div>
+
+        <div class="detail-box">
+            <h3>Detail Images for 3D Review</h3>
+            <div id="detailImageList" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
+                </div>
+        </div>
+
+        <div class="detail-box">
+            <h3>Product Information</h3>
+            <p><strong>Seller Model Path:</strong> <span id="detailModel3D"></span></p>
+            
+            <p><strong>Model Status:</strong> <span id="modelStatus" style="font-weight: bold;">Checking...</span></p>
+            <div id="sellerModelLink" style="margin-top: 10px;">
+                </div>
+        </div>
+        
+        <div class="detail-box">
+            <h3>Product Information</h3>
+            <p><strong>ID:</strong> <span id="detailProductId"></span></p>
+            <p><strong>Status:</strong> <span id="detailApprovalStatus" class="status-pending"></span></p>
+            <p><strong>Description:</strong> <span id="detailDescription"></span></p>
+            <p><strong>Price:</strong> <span id="detailPrice"></span> บาท</p>
+            <p><strong>Stock:</strong> <span id="detailStock"></span> units</p>
+            <p><strong>Seller Model Path:</strong> <span id="detailModel3D"></span></p>
+        </div>
+
+        <form id="adminActionForm">
+            <h3>Admin Action</h3>
+            
+            <label for="adminModelFile">Generated 3D Model File (.glb, .gltf):</label>
+            <input type="file" id="adminModelFile" accept=".glb,.gltf" required>
+            <p style="color: grey; font-size: small;">*เลือกไฟล์ 3D ที่สร้างสำเร็จแล้วจากคอมพิวเตอร์ของคุณ</p>
+            
+            <label for="adminNotes">Admin Notes (Optional):</label>
+            <textarea id="adminNotes" rows="2"></textarea>
+            
+            <button type="button" onclick="handleApproval(document.getElementById('detailProductId').textContent, 'approved')" style="background-color: green;">Approve & Upload 3D Model</button>
+            <button type="button" onclick="handleApproval(document.getElementById('detailProductId').textContent, 'rejected')" style="background-color: red;">Reject Product</button>
+        </form>
+
+        <a href="admin_home.html">Back to Queue</a> | <button onclick="logout()">Log Out</button>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

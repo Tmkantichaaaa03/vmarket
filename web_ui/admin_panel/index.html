@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="../seller_panel/css/style.css">
+</head>
+<body>
+    <div class="container" id="admin-login-form" style="width: 300px;">
+        <h2>Admin Login</h2>
+        <form id="loginForm">
+            <label for="loginUsername">Username:</label>
+            <input type="text" id="loginUsername" value="admin" required>
+            <label for="loginPassword">password:</label>
+            <input type="password" id="loginPassword" value="password" required>
+            <button type="submit">Log In</button>
+            <div id="loginMessage" class="message"></div>
+        </form>
+    </div>
+
+    <script src="js/admin.js"></script>
+        <script>
+            window.onload = function() {
+                sessionStorage.removeItem('admin_auth'); // ล้าง Session
+                checkLoginAdmin(); // เรียกใช้ฟังก์ชันจาก admin.js
+            };
+        </script>
+</body>
+</html>

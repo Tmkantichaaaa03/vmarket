@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Product</title>
+
+    <style>
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <div class="container" style="width: 800px;">
+        <h2>Product Management</h2>
+        <p>Current shop: <span id="shopNameDisplay"></span></p>
+
+        <a href="add_product.html" class="button" style="display: inline-block; margin-bottom: 20px;">+ Add New Product</a>
+
+        <h3>My product list</h3>
+        <table id="productListTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Status</th>
+                    <th>Avtions</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+
+        <p id="productMessage" class="message"></p>
+
+        <hr style="margin-top:  20px;">
+        <a href="dashboard.html">Back to Dashboard</a> | <a href="#" onclick="logout()">Log Out</a>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        //เรียกใช้ฟังก์ชันดึงข้อมูลสินค้าเมื่อหน้าโหลดเสร็จ
+        window.onload = function() {
+            checkAuth();
+            displayShopName();
+            loadSellerProducts(); //ฟังก์ชันนี้จะถูกเพิ่มใน main.js
+        };
+    </script>
+</body>

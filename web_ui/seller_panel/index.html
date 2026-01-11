@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Panel Login</title>
+    <link rel="stylesheet" href="css/styly.css">
+</head>
+<body>
+    <div class="container" id="login-form">
+        <h2>Seller Login</h2>
+        <form id="loginForm">
+            <label for="loginUsername">Username:</label>
+            <input type="text" id="loginUsername" required>
+            
+            <label for="loginPassword">Password:</label>
+            <input type="password" id="loginPassword" required>
+            
+            <button type="submit">Log In</button>
+            <div id="loginMessage" class="message"></div>
+        </form>
+        <p style="text-align: center; margin-top: 20px;">
+            <a href="register.html">Don't have an account? Register Shop</a>
+        </p>
+    </div>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>

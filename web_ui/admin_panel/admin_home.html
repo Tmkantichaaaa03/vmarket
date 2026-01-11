@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Product Approval Queue</title>
+    <link rel="stylesheet" href="../seller_panel/css/style.css">
+    <style>
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .approve-btn { background-color: #4caf50; color: white; border: none; padding: 5px 10px; cursor: pointer; }
+        .reject-btn { background-color: #f44336; color: white; border: none; padding: 5px 10px; cursor: pointer; margin-left: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container" id="admin-dashboard" style="width: 90%; max-width: 1200px;">
+        <h2>Product Approval Queue</h2>
+        <p>Welcome, Admin! Total pending products: <span id="pendingCount">0</span></p>
+
+        <table id="pendingTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Seller ID</th>
+                    <th>Price</th>
+                    <th>Description</th>
+                    <th>Model File</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <p id="dashboardMessage" class="message" style="color: black;"></p>
+        <button onclick="logout()">Log Out</button>
+    </div>
+
+    <script src="js/admin.js"></script>
+    <script>
+        window.onload = function() {
+            checkAuthAdmin(); // ตรวจสอบสิทธิ์
+            loadPendingProducts(); // ดึงข้อมูล
+        };
+    </script>
+</body>
+</html>
