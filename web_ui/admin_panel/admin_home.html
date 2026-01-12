@@ -5,16 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Product Approval Queue</title>
     <link rel="stylesheet" href="../admin_panel/css/admin_home.css">
-
 </head>
 <body>
+    <!-- Top Menu -->
     <nav class="top-menu pixel-text">
         <div class="logo">ADMIN PANEL</div>
         <ul>
             <li><a href="#" onclick="logout()" class="logout">ออกจากระบบ</a></li>
         </ul>
     </nav>
-    
+
+    <!-- Main Container -->
     <div class="container" id="admin-dashboard" style="width: 90%; max-width: 1200px;">
         <h2>Product Approval Queue</h2>
         <p>Welcome, Admin! Total pending products: <span id="pendingCount">0</span></p>
@@ -24,26 +25,21 @@
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>Seller ID</th>
-                    <th>Price</th>
+                    <th>Seller Name</th>
+                    <th>Price (฿)</th>
                     <th>Description</th>
                     <th>Model File</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
+                <!-- Data จะถูกเติมจาก JS -->
             </tbody>
         </table>
-        <p id="dashboardMessage" class="message" style="color: black;"></p>
-        <button onclick="logout()">Log Out</button>
+
+        <p id="dashboardMessage" class="message"></p>
     </div>
 
     <script src="js/admin.js"></script>
-    <script>
-        window.onload = function() {
-            checkAuthAdmin(); // ตรวจสอบสิทธิ์
-            loadPendingProducts(); // ดึงข้อมูล
-        };
-    </script>
 </body>
 </html>

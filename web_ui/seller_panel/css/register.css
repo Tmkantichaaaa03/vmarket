@@ -19,81 +19,77 @@ body {
 /* ===== Container ===== */
 .container {
     background-color: #2b2b2b;
-    border: 4px solid #5a5a5a;
-    padding: 28px;
+    border: 3px solid #5a5a5a;
+    border-radius: 8px;
+    padding: 32px;
     width: 420px;
-    box-shadow: 6px 6px 0 #000;
+    box-shadow: 4px 4px 0 #000;
 }
 
-/* ===== Pixel Text Effect ===== */
+/* ===== Pixel Text Only for Titles ===== */
 .pixel-text {
+    font-family: 'DotGothic16', monospace;
     text-shadow:
-        2px 0 0 #000,
-       -2px 0 0 #000,
-        0 2px 0 #000,
-        0 -2px 0 #000,
-        2px 2px 0 #000,
-       -2px 2px 0 #000,
-        2px -2px 0 #000,
-       -2px -2px 0 #000;
-}
-
-/* ===== Blink Animation ===== */
-@keyframes pixel-blink {
-    0%, 45% { opacity: 1; }
-    50%, 100% { opacity: 0.4; }
-}
-
-.blink {
-    animation: pixel-blink 1.2s steps(2, start) infinite;
+        1px 0 0 #000,
+       -1px 0 0 #000,
+        0 1px 0 #000,
+        0 -1px 0 #000;
 }
 
 /* ===== Title ===== */
 h2 {
     text-align: center;
     margin-bottom: 24px;
-    font-size: 26px;
+    font-size: 22px;
     color: #9fd3c7;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
 }
 
-/* ===== Labels ===== */
+/* ===== Form Labels ===== */
 label {
     display: block;
-    font-size: 16px;
+    font-size: 14px;
     margin-bottom: 6px;
+    color: #dcdcdc;
 }
 
 /* ===== Inputs ===== */
-input {
+input,
+textarea {
     width: 100%;
-    padding: 12px;
+    padding: 10px 12px;
     margin-bottom: 16px;
     background-color: #1a1a1a;
-    border: 3px solid #555;
-    color: #ffffff;
+    border: 1.5px solid #555;
+    border-radius: 6px;
+    color: #fff;
     font-family: inherit;
-    font-size: 16px;
+    font-size: 14px;
+    box-shadow: 1px 1px 0 #000;
+    transition: all 0.15s ease;
 }
 
-input:focus {
+input:focus,
+textarea:focus {
     outline: none;
     border-color: #9fd3c7;
     box-shadow: 0 0 0 2px #000;
 }
 
-/* ===== Button ===== */
+/* ===== Buttons ===== */
 button {
     width: 100%;
-    padding: 14px;
+    padding: 12px;
     background-color: #3a6f5e;
-    border: 3px solid #9fd3c7;
+    border: 1.5px solid #9fd3c7;
+    border-radius: 6px;
     color: #ffffff;
-    font-family: inherit;
-    font-size: 18px;
-    cursor: pointer;
-    box-shadow: 3px 3px 0 #000;
+    font-family: 'DotGothic16', monospace;
+    font-size: 14px;
     letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 #000;
+    transition: all 0.15s ease;
 }
 
 button:hover {
@@ -113,13 +109,16 @@ button:active {
     color: #ffb3b3;
 }
 
-/* ===== Links ===== */
-a {
+/* ===== Back Links ===== */
+.back-links {
+    display: block;
+    margin-top: 16px;
+    text-align: center;
     color: #9fd3c7;
     text-decoration: none;
     font-size: 13px;
 }
 
-a:hover {
+.back-links:hover {
     text-decoration: underline;
 }

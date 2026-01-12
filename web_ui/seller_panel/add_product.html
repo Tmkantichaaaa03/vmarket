@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Add New Product</title>
-    <link rel="stylesheet" href="../seller_panel/css/dashboard.css">
+    <link rel="stylesheet" href="../seller_panel/css/add_product.css">
 
     <style>
         textarea { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
@@ -21,9 +21,12 @@
     </nav>
 
     <div class="content">
-    <div class="container" style="width: 520px;">
-        <h2 class="pixel-text">เพิ่มสินค้าใหม่</h2>
-        <p>ร้านค้า: <strong id="shopNameDisplay"></strong></p>
+    <div class="container add-product" style="width: 520px;">
+
+        <h2 class="pixel-title">เพิ่มสินค้าใหม่</h2>
+        <p class="shop-name">
+            ร้านค้า: <strong id="shopNameDisplay"></strong>
+        </p>
 
         <form id="addProductForm">
 
@@ -62,7 +65,7 @@
                 <input type="number" id="productStock" min="0" required>
             </div>
 
-            <button type="submit">
+            <button type="submit" class="submit-btn">
                 ลงขายสินค้า (รอการอนุมัติจากแอดมิน)
             </button>
 
@@ -71,9 +74,8 @@
 
         <div class="back-links">
             <a href="dashboard.html">← กลับไปหน้ารายการสินค้า</a>
-            |
-            <a href="#" onclick="logout()">ออกจากระบบ</a>
         </div>
+
     </div>
 </div>
 

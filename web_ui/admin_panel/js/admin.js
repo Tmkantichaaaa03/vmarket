@@ -78,18 +78,27 @@ async function loadPendingProducts() {
 
         pendingTableBody.innerHTML = ''; 
 
-        if (result.success && result.data.length > 0) {
+        if (result.success && result.data && result.data.length > 0) {
             document.getElementById('pendingCount').textContent = result.data.length;
 
             result.data.forEach(product => {
+                console.log(product); // Debug ดูชื่อ field จริง
+
                 const row = pendingTableBody.insertRow();
 
-                row.insertCell().textContent = product.product_id;
-                row.insertCell().textContent = product.name;
-                row.insertCell().textContent = product.seller_id;
-                row.insertCell().textContent = product.price;
-                row.insertCell().textContent = product.description.substring(0, 50) + '...';
-                row.insertCell().textContent = product.model_3d;
+                // ตรวจสอบ field ที่ API ส่งมา
+                const productName = product.name || product.product_name || '-';
+                const sellerId = product.seller_id ?? product.seller ?? product.sellerID ?? product.shop_name ?? '-';
+                const price = product.price != null ? parseFloat(product.price).toFixed(2) : '-';
+                const description = product.description ? product.description.substring(0, 50) + '...' : '-';
+                const model3D = product.model_3d || 'No 3D Model';
+
+                row.insertCell().textContent = product.product_id || '-';
+                row.insertCell().textContent = productName;
+                row.insertCell().textContent = sellerId;
+                row.insertCell().textContent = price;
+                row.insertCell().textContent = description;
+                row.insertCell().textContent = model3D;
 
                 const actionCell = row.insertCell();
                 actionCell.innerHTML = `
