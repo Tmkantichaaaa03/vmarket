@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>จองพื้นที่ร้านค้า | VMarket</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS หลัก -->
+    <link rel="stylesheet" href="../seller_panel/css/dashboard.css">
+
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        .stall-section {
+            margin-top: 30px;
+        }
+
+        .stall-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .stall-card {
+            width: 200px;
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px solid #2e7d32;
+            background: #f9fff9;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .stall-card.booked {
+            border-color: #c62828;
+            background: #fff5f5;
+        }
+
+        .stall-card h4 {
+            margin-bottom: 10px;
+        }
+
+        .stall-card button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            background: #2e7d32;
+            color: white;
+        }
+
+        .stall-card.booked button {
+            background: #aaa;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="top-menu">
+    <div class="nav-container">
+        <div class="nav-left">
+            <div class="logo">SELLER PANEL</div>
+        </div>
+
+        <div class="nav-center">
+            <a href="dashboard.html">จัดการสินค้า</a>
+            <a href="orders.html">จัดการคำสั่งซื้อ</a>
+            <a href="booking.html" class="active">จองพื้นที่ร้านค้า</a>
+        </div>
+
+        <div class="nav-right">
+            <a href="#" onclick="logout()">ออกจากระบบ</a>
+        </div>
+    </div>
+</nav>
+
+<main class="content">
+    <div class="container wide">
+
+        <h2>เลือกพื้นที่ร้านค้า</h2>
+
+        <!-- แถวบน -->
+        <div class="stall-section">
+            <h3>พื้นที่ร้านค้า แถวบน</h3>
+            <div id="topRow" class="stall-row"></div>
+        </div>
+
+        <!-- แถวล่าง -->
+        <div class="stall-section">
+            <h3>พื้นที่ร้านค้า แถวล่าง</h3>
+            <div id="bottomRow" class="stall-row"></div>
+        </div>
+
+    </div>
+</main>
+
+<!-- โหลด JS ตามลำดับ -->
+<script src="js/auth.js"></script>
+<script src="js/booking.js"></script>
+
+</body>
+</html>

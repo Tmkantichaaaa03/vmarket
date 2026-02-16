@@ -1,110 +1,154 @@
-@import url('https://fonts.googleapis.com/css2?family=DotGothic16&family=Chakra+Petch:wght@400;500&display=swap');
-
+/* ล้างค่า Default */
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* ===== BODY ===== */
+/* พื้นหลังหน้าจอ */
 body {
-    margin: 0;
+    background-color: #e2eff5;
     height: 100vh;
-    background-color: #1e1e1e;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Chakra Petch', sans-serif;
-    color: #e0e0e0;
 }
 
-/* ===== CONTAINER ===== */
-.container {
-    background-color: #2b2b2b;
-    border: 1.5px solid #5a5a5a;
-    border-radius: 10px;
-    padding: 32px;
-    width: 360px;
-    box-shadow: 4px 4px 0 #000;
+/* กล่องหลัก */
+.login-card {
+    display: flex;
+    width: 850px;
+    height: 500px; /* ปรับความสูงลงเล็กน้อยเพราะไม่มี Social แล้ว */
+    background-color: #fff;
+    border-radius: 40px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    overflow: hidden;
 }
 
-/* ===== TITLE (Soft Pixel Only Here) ===== */
-h2 {
-    font-family: 'DotGothic16', monospace;
+/* --- ฝั่งซ้าย สีฟ้า --- */
+.side-panel {
+    flex: 1.2;
+    background: linear-gradient(135deg, #42d1ff 0%, #00bcff 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
     text-align: center;
-    margin-bottom: 24px;
-    font-size: 22px;
-    letter-spacing: 1.5px;
-    color: #9fd3c7;
+    border-radius: 0 180px 180px 0;
+    padding: 40px;
 }
 
-/* ===== LABEL ===== */
-label {
-    font-size: 14px;
-    display: block;
-    margin-bottom: 6px;
-    color: #dcdcdc;
+.side-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
 }
 
-/* ===== INPUT ===== */
-input {
-    width: 100%;
-    padding: 10px 12px;
-    margin-bottom: 18px;
-    background-color: #1a1a1a;
-    border: 1.5px solid #555;
-    border-radius: 6px;
-    color: #fff;
-    font-family: inherit;
-    font-size: 14px;
-    box-shadow: 2px 2px 0 #000;
-    transition: all 0.15s ease;
+.side-content p {
+    margin-bottom: 30px;
+    font-size: 0.95rem;
+    opacity: 0.9;
 }
 
-input:focus {
-    outline: none;
-    border-color: #9fd3c7;
-    box-shadow: 1px 1px 0 #9fd3c7;
-}
-
-/* ===== BUTTON ===== */
-button {
-    width: 100%;
-    padding: 12px;
-    background-color: #3a6f5e;
-    border: 1.5px solid #9fd3c7;
-    border-radius: 8px;
-    color: #ffffff;
-    font-family: 'DotGothic16', monospace;
-    font-size: 14px;
-    letter-spacing: 1px;
-    cursor: pointer;
-    box-shadow: 3px 3px 0 #000;
-    transition: all 0.15s ease;
-}
-
-button:hover {
-    background-color: #4a8f7a;
-    transform: translate(1px, 1px);
-    box-shadow: 2px 2px 0 #000;
-}
-
-/* ===== MESSAGE ===== */
-.message {
-    margin-top: 14px;
-    font-size: 12px;
-    text-align: center;
-    color: #ffb3b3;
-}
-
-/* ===== LINK ===== */
-a {
-    display: block;
-    margin-top: 16px;
-    text-align: center;
-    color: #9fd3c7;
+.btn-register-outline {
+    display: inline-block;
+    padding: 12px 45px;
+    border: 2px solid white;
+    border-radius: 30px;
+    color: white;
     text-decoration: none;
-    font-size: 13px;
+    font-weight: 600;
+    transition: 0.3s ease;
 }
 
-a:hover {
+.btn-register-outline:hover {
+    background: white;
+    color: #00bcff;
+}
+
+/* --- ฝั่งขวา ฟอร์ม --- */
+.form-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 40px; /* เพิ่ม Padding บนล่าง */
+}
+
+.form-panel h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.input-group {
+    width: 100%;
+    max-width: 300px;
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.input-group i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px 15px 14px 45px;
+    background-color: #f4f4f4;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.input-group input:focus {
+    background-color: #ebebeb;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+}
+
+.forgot-link {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #888;
+    text-decoration: none;
+    margin: 10px 0 25px 0;
+}
+
+.forgot-link:hover {
+    color: #555;
     text-decoration: underline;
+}
+
+.btn-login-submit {
+    width: 100%;
+    max-width: 300px;
+    padding: 14px;
+    background: linear-gradient(to right, #243b55, #141e30);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.btn-login-submit:hover {
+    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.message {
+    margin-top: 15px;
+    font-size: 0.85rem;
+    text-align: center;
 }

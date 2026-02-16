@@ -1,0 +1,240 @@
+/* ============================================================
+   ORDER DETAIL STYLING (Premium Minimalist)
+   ============================================================ */
+
+.content {
+    margin-top: 110px;
+    padding-bottom: 60px;
+}
+
+/* ปุ่มย้อนกลับ */
+.btn-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #a88b76;
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 20px;
+    transition: 0.3s;
+}
+
+.btn-back-link:hover {
+    color: #3e342d;
+    transform: translateX(-5px);
+}
+
+/* การ์ดหลัก */
+.detail-card {
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 40px;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.03);
+    border: 1px solid rgba(168, 139, 118, 0.1);
+}
+
+/* หัวข้อรายละเอียด */
+.detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #f1ece7;
+    padding-bottom: 20px;
+}
+
+.order-number {
+    font-size: 26px;
+    font-weight: 700;
+    color: #3e342d;
+    margin: 0;
+}
+
+/* ส่วนข้อมูลผู้ซื้อ (Customer Info Box) */
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.info-box {
+    background: #fffcf9;
+    padding: 25px;
+    border-radius: 20px;
+    border: 1px solid #f1ece7;
+}
+
+.info-box h4 {
+    margin: 0 0 15px 0;
+    color: #a88b76;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-box p {
+    margin: 8px 0;
+    color: #4a4a4a;
+    font-size: 15px;
+}
+
+.info-box b { color: #3e342d; }
+
+/* ตารางรายการสินค้า */
+.item-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+.item-table th {
+    text-align: left;
+    padding: 15px;
+    color: #a88b76;
+    font-weight: 600;
+    font-size: 14px;
+    border-bottom: 2px solid #f1ece7;
+}
+
+.item-table td {
+    padding: 20px 15px;
+    border-bottom: 1px solid #f8f6f3;
+    color: #3e342d;
+}
+
+/* ยอดรวมสุทธิ */
+.summary-section {
+    text-align: right;
+    padding: 20px;
+    background: #3e342d;
+    color: white;
+    border-radius: 15px;
+    margin-bottom: 40px;
+}
+
+.summary-section h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+/* ส่วนจัดการสถานะ (Action Section) */
+.action-card {
+    background: #f8f6f3;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.status-label {
+    font-size: 18px;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn-confirm {
+    background: #2e7d32;
+    color: white;
+    border: none;
+    padding: 15px 35px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 15px rgba(46, 125, 50, 0.2);
+}
+
+.btn-cancel-order {
+    background: #c62828;
+    color: white;
+    border: none;
+    padding: 15px 35px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 15px rgba(198, 40, 40, 0.2);
+}
+
+.btn-confirm:hover, .btn-cancel-order:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.1);
+}
+
+/* ================= LAYOUT ================= */
+
+.order-layout {
+    display: flex;
+    gap: 30px;
+}
+
+/* ================= DETAIL PANEL ================= */
+
+.detail-panel {
+    width: 0;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+    transition: 0.4s ease;
+}
+
+.detail-panel.open {
+    width: 420px;
+    padding: 25px;
+}
+
+.detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.detail-header button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.item-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: 14px;
+}
+
+.total-box {
+    text-align: right;
+    margin-top: 20px;
+    font-size: 18px;
+    color: #3e342d;
+}
+
+.btn-confirm {
+    background: #4caf50;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    background: #f44336;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}

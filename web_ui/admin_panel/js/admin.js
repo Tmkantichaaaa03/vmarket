@@ -133,7 +133,7 @@ async function loadAdminProductDetail() {
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('id');
 
-    if (!productId) {
+    if (!productId) {เปลี่
         message.textContent = 'Error: Product ID is missing in URL.';
         message.style.color = 'red';
         return;

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>รายละเอียดคำสั่งซื้อ - Seller Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../seller_panel/css/dashboard.css">
+    <link rel="stylesheet" href="../seller_panel/css/order_detail.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
+</head>
+<body>
+    <nav class="top-menu pixel-text">
+        <div class="logo">SELLER PANEL</div>
+        <ul>
+            <li><a href="dashboard.html">จัดการสินค้า</a></li>
+            <li><a href="shop_profile.html">โปรไฟล์ร้านค้า</a></li> 
+            <li><a href="orders.html">จัดการคำสั่งซื้อ</a></li>
+            <li><a href="#" onclick="logout()" class="logout">ออกจากระบบ</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <div class="container wide">
+            <button onclick="window.location.href='orders.html'">← กลับไปหน้ารวมออเดอร์</button>
+            
+            <h1 class="pixel-text">รายละเอียดคำสั่งซื้อ #<span id="detOrderId"></span></h1>
+            <hr>
+
+            <fieldset>
+                <legend><b>ข้อมูลผู้ซื้อและการจัดส่ง</b></legend>
+                <p><b>ชื่อ:</b> <span id="detCustName">กำลังโหลด...</span></p>
+                <p><b>เบอร์โทร:</b> <span id="detCustPhone">-</span></p>
+                <p><b>ที่อยู่:</b> <span id="detCustAddr">-</span></p>
+            </fieldset>
+
+            <br>
+
+            <h3 class="pixel-text">รายการสินค้าที่สั่งซื้อ</h3>
+            <table border="1" style="width:100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                    <tr style="background-color: #eee;">
+                        <th>ชื่อสินค้า</th>
+                        <th>ราคา/ชิ้น</th>
+                        <th>จำนวน</th>
+                        <th>รวมย่อย</th>
+                    </tr>
+                </thead>
+                <tbody id="detItemList">
+                </tbody>
+            </table>
+
+            <h2 style="text-align: right;">ยอดรวมสุทธิ: <span id="detTotal">0</span> บาท</h2>
+            <hr>
+
+            <div id="actionSection">
+                <h3 class="pixel-text">จัดการคำสั่งซื้อ</h3>
+                <p>สถานะปัจจุบัน: <b id="detStatus" style="font-size: 1.2em;">-</b></p>
+                
+                <div id="buttonGroup">
+                    <button id="btnConfirm" onclick="updateOrderStatus('confirmed')" 
+                            style="background-color: #28a745; color: white; padding: 10px 20px; border: none; cursor: pointer; font-size: 16px;">
+                        ยืนยันรับออเดอร์
+                    </button>
+
+                    <button id="btnCancel" onclick="updateOrderStatus('cancelled')" 
+                            style="background-color: #dc3545; color: white; padding: 10px 20px; border: none; cursor: pointer; font-size: 16px; margin-left: 10px;">
+                        ยกเลิกออเดอร์
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // เมื่อโหลดหน้าจอ
+        window.onload = function() {
+            if (typeof checkAuth === "function") checkAuth();
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('order_id');
+
+            if (orderId) {
+                fetchFullOrderData(orderId);
+            } else {
+                alert("ไม่พบรหัสคำสั่งซื้อ");
+                window.location.href = 'orders.html';
+            }
+        };
+
+        // ฟังก์ชันดึงข้อมูลมาแสดงผล
+        async function fetchFullOrderData(orderId) {
+            try {
+                // เรียก API จากโฟลเดอร์ orders
+                const response = await fetch(`${BASE_API_URL}orders/get_order_details.php?order_id=${orderId}`);
+                if (!response.ok) throw new Error('เรียกไฟล์ API ไม่สำเร็จ');
+
+                const result = await response.json();
+
+                if (result.success) {
+                    const d = result.data;
+                    
+                    document.getElementById('detOrderId').innerText = d.order_id;
+                    document.getElementById('detCustName').innerText = d.customer_name;
+                    document.getElementById('detCustPhone').innerText = d.phone_number;
+                    document.getElementById('detCustAddr').innerText = `${d.address} ${d.city} ${d.postal_code}`;
+                    
+                    const statusEl = document.getElementById('detStatus');
+                    // ถ้าใน DB เป็นค่าว่าง หรือ pending ให้โชว์ "รอการยืนยัน"
+                    const currentStatus = (d.status === 'pending' || !d.status) ? 'รอการยืนยัน' : d.status;
+                    statusEl.innerText = currentStatus;
+
+                    document.getElementById('detTotal').innerText = parseFloat(d.total_amount).toLocaleString();
+
+                    // แสดงรายการสินค้า
+                    const itemTableBody = document.getElementById('detItemList');
+                    itemTableBody.innerHTML = d.items.map(item => `
+                        <tr>
+                            <td>${item.product_name}</td>
+                            <td>${parseFloat(item.unit_price).toLocaleString()}</td>
+                            <td>${item.quantity}</td>
+                            <td>${parseFloat(item.subtotal).toLocaleString()}</td>
+                        </tr>
+                    `).join('');
+
+                    // จัดการเรื่องปุ่ม: ถ้าสถานะไม่ใช่ "รอการยืนยัน" ให้ซ่อนปุ่มจัดการทั้งหมด
+                    if (currentStatus !== 'รอการยืนยัน') {
+                        document.getElementById('buttonGroup').style.display = 'none';
+                        
+                        // ปรับสีสถานะตามคำที่ได้รับ
+                        if (currentStatus === 'ยกเลิกออเดอร์') {
+                            statusEl.style.color = "red";
+                        } else {
+                            statusEl.style.color = "blue"; // สำหรับ "กำลังจัดส่ง"
+                        }
+                        statusEl.style.fontWeight = "bold";
+                    } else {
+                        statusEl.style.color = "orange";
+                    }
+                }
+            } catch (e) {
+                console.error("Error:", e);
+                alert("เกิดข้อผิดพลาดในการโหลดข้อมูล");
+            }
+        }
+
+        // ฟังก์ชันอัปเดตสถานะ
+        async function updateOrderStatus(action) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('order_id');
+            
+            let statusText = action === 'confirmed' ? "กำลังจัดส่ง" : "ยกเลิกออเดอร์";
+
+            if (!confirm(`ยืนยันการเปลี่ยนสถานะออเดอร์เป็น: ${statusText}?`)) return;
+
+            try {
+                const response = await fetch(`${BASE_API_URL}orders/update_order_status.php`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        order_id: orderId,
+                        status: action 
+                    })
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    alert('บันทึกข้อมูลเรียบร้อย: ' + statusText);
+                    location.reload(); 
+                } else {
+                    alert('เกิดข้อผิดพลาด: ' + result.message);
+                }
+            } catch (e) {
+                console.error("Error updating status:", e);
+                alert("ไม่สามารถติดต่อ Server ได้");
+            }
+        }
+    </script>
+</body>
+</html>

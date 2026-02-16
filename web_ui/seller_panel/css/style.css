@@ -1,0 +1,293 @@
+/* --- 1. Reset & Base Setup --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Kanit', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg,#f3f0ec,#e6dfd8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* --- 2. Container --- */
+.container {
+    background-color: #ffffff;
+    border-radius: 30px;
+    box-shadow: 
+        0 20px 40px rgba(0,0,0,0.06),
+        0 5px 15px rgba(0,0,0,0.04);
+    position: relative;
+    overflow: hidden;
+    width: 900px;
+    min-height: 600px;
+}
+
+/* --- 3. ฟอร์มฝั่งสีขาว --- */
+.form-container {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: all 0.6s ease-in-out;
+}
+
+.sign-in-container {
+    left: 50%;
+    width: 50%;
+    z-index: 2;
+}
+
+.sign-up-container {
+    left: 50%;
+    width: 50%;
+    opacity: 0;
+    z-index: 1;
+}
+
+.container.right-panel-active .sign-in-container {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+.container.right-panel-active .sign-up-container {
+    transform: translateX(-100%);
+    opacity: 1;
+    z-index: 5;
+    animation: show 0.6s;
+}
+
+@keyframes show {
+    0%, 49.99% { opacity: 0; z-index: 1; }
+    50%, 100% { opacity: 1; z-index: 5; }
+}
+
+/* --- 4. Overlay --- */
+.overlay-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 0.6s ease-in-out;
+    z-index: 100;
+}
+
+.container.right-panel-active .overlay-container {
+    transform: translateX(100%);
+}
+
+.overlay {
+    background: linear-gradient(
+        135deg,
+        #cebaa8 0%,
+        #b89a87 40%,
+        #917868 60%,
+        #d8c7b7 100%
+    );
+    background-size: 200% 100%;
+    background-position: 0 0;
+    color: #4a3f37;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    transition: background-position 0.6s ease-in-out;
+}
+
+.container.right-panel-active .overlay {
+    background-position: 100% 0;
+}
+
+/* --- 5. Overlay Content --- */
+.overlay-panel {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    text-align: center;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    transition: opacity 0.4s ease-in-out, transform 0.6s ease-in-out;
+}
+
+.overlay-panel h1 {
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #3e342d;
+}
+
+.overlay-panel p {
+    margin-top: 10px;
+    opacity: 0.85;
+}
+
+.overlay-left {
+    opacity: 1;
+    z-index: 10;
+    transform: translateX(0);
+}
+
+.container.right-panel-active .overlay-left {
+    opacity: 0;
+    transform: translateX(-20%);
+}
+
+.overlay-right {
+    opacity: 0;
+    transform: translateX(20%);
+}
+
+.container.right-panel-active .overlay-right {
+    opacity: 1;
+    z-index: 10;
+    transform: translateX(0);
+}
+
+/* --- 6. Form Styling --- */
+form {
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 60px;
+    height: 100%;
+}
+
+form h1 {
+    margin-bottom: 25px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #3e342d;
+}
+
+.input-group {
+    background-color: #f1ece7;
+    border-radius: 14px;
+    margin: 10px 0; /* ระยะห่างคงที่สำหรับทุกหน้าในตอนเริ่มต้น */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.input-group:focus-within {
+    background-color: #ffffff;
+    box-shadow: 0 0 0 2px rgba(168,139,118,0.35);
+}
+
+.input-group input {
+    background-color: transparent;
+    border: none;
+    padding: 14px 15px;
+    outline: none;
+    width: 100%;
+}
+
+/* --- 7. Buttons --- */
+.btn-main {
+    border-radius: 40px;
+    background: linear-gradient(135deg,#bfa38f,#a88b76);
+    color: #ffffff;
+    padding: 14px 55px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.btn-main:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid #ffffff;
+    color: #4a3f37;
+    padding: 12px 40px;
+    border-radius: 40px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+    background: rgba(255,255,255,0.7);
+}
+
+/* --- 8. Forgot Password --- */
+form a {
+    text-decoration: none;
+    color: #8f6d5d;
+    font-size: 14px;
+    margin-top: 10px;
+    transition: 0.3s ease;
+}
+
+form a:hover {
+    opacity: 0.7;
+}
+
+/* --- 9. ส่วนจัดการเนื้อหาล้นและระยะห่างแจ้งเตือน --- */
+.sign-up-container form {
+    overflow-y: auto; 
+    padding-top: 40px;
+    padding-bottom: 40px;
+    justify-content: flex-start; /* ให้เริ่มจากด้านบนเพื่อให้เลื่อนได้ถูกต้อง */
+}
+
+/* ตกแต่ง Scrollbar */
+.sign-up-container form::-webkit-scrollbar { width: 6px; }
+.sign-up-container form::-webkit-scrollbar-thumb { background: #d8c7b7; border-radius: 10px; }
+
+.sign-up-container .input-group {
+    margin: 10px 0; /* บังคับให้ระยะห่างเท่ากับหน้า Login ในตอนเริ่มต้น */
+}
+
+.sign-up-container h1 {
+    margin-bottom: 20px;
+    font-size: 1.6rem;
+}
+
+.error-text {
+    color: #d9534f;
+    font-size: 0.72rem;
+    display: block;
+    text-align: left;
+    width: 100%;
+    padding-left: 15px;
+    
+    /* แก้ไขส่วนนี้: ให้ใช้ความสูงเป็น 0 และซ่อนไว้ */
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.3s ease; /* ปรับ transition ให้สมูทขึ้น */
+    margin-bottom: 0; 
+}
+
+/* เมื่อ JavaScript สั่งโชว์ */
+.error-text.visible {
+    max-height: 50px; /* เพิ่มความสูงเผื่อไว้ */
+    opacity: 1;
+    margin-top: -5px;  /* ขยับขึ้นไปหา input นิดนึง */
+    margin-bottom: 10px; /* เว้นระยะห่างจาก input ตัวถัดไป */
+    overflow: visible;  /* ยอมให้ข้อความโผล่ออกมา */
+}
+
+/* ขอบแดงเมื่อผิด */
+.input-group.invalid {
+    border: 1px solid #d9534f !important;
+    background-color: #fffafa !important;
+}

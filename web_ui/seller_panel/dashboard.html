@@ -2,66 +2,221 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>แผงควบคุมร้านค้า</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แผงควบคุมร้านค้า - VMARKET</title>
     <link rel="stylesheet" href="../seller_panel/css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <style>
+        /* สไตล์เพิ่มเติมสำหรับระบบแจ้งเตือนและ Layout */
+        .noti-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .noti-link {
+            font-size: 20px;
+            text-decoration: none;
+            position: relative;
+            cursor: pointer;
+            padding: 0 15px;
+        }
+
+        .badge {
+            position: absolute;
+            top: -2px;
+            right: 5px;
+            background-color: #ff4757;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 10px;
+            font-family: sans-serif;
+            font-weight: bold;
+            border: 2px solid #fff;
+        }
+
+        .noti-dropdown {
+            display: none; 
+            position: absolute;
+            right: 10px;
+            top: 50px;
+            width: 300px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            z-index: 1000;
+            border: 1px solid #ddd;
+        }
+
+        .noti-header {
+            padding: 12px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #eee;
+            font-weight: bold;
+            color: #333;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .noti-list {
+            max-height: 350px;
+            overflow-y: auto;
+        }
+
+        .noti-item {
+            padding: 12px;
+            border-bottom: 1px solid #f1f1f1;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-align: left;
+            display: block;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .noti-item:hover { background-color: #f1f2f6; }
+        .noti-item.unread { background-color: #e3f2fd; }
+        .noti-item strong { display: block; color: #2c3e50; font-size: 14px; }
+        .noti-item p { margin: 5px 0; font-size: 13px; color: #666; }
+        .noti-item small { color: #999; font-size: 11px; }
+
+        .empty-noti { padding: 20px; text-align: center; color: #999; }
+        
+        /* สไตล์สำหรับชื่อร้านใน Navbar */
+        .profile-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            transition: 0.3s ease;
+        }
+
+        .nav-shop-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #3e342d;
+            max-width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .profile-link:hover .nav-shop-name {
+            color: #b89a87;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- ===== Top Menu ===== -->
-    <nav class="top-menu pixel-text">
-        <div class="logo">SELLER PANEL</div>
-        <ul>
-            <li><a href="#" class="active">จัดการสินค้า</a></li>
-            <li><a href="orders.html">จัดการคำสั่งซื้อ</a></li>
-            <li><a href="#" onclick="logout()" class="logout">ออกจากระบบ</a></li>
-        </ul>
-    </nav>
-
-    <!-- ===== Main Content ===== -->
-    <main class="content">
-
-        <div class="container wide">
-            <h2 class="pixel-text">จัดการสินค้า</h2>
-
-            <p class="shop-name pixel-text">
-                ร้านค้า: <span id="shopNameDisplay"></span>
-            </p>
-
-            <a href="add_product.html" class="button pixel-text">
-              เพิ่มสินค้าใหม่
-            </a>
-
-            <h3 class="pixel-text">รายการสินค้าของฉัน</h3>
-
-            <table id="productListTable">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>ชื่อสินค้า</th>
-                        <th>ราคา</th>
-                        <th>สต็อก</th>
-                        <th>สถานะ</th>
-                        <th>การจัดการ</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- JS เติมข้อมูล -->
-                </tbody>
-            </table>
-
-            <p id="productMessage" class="message"></p>
+<nav class="top-menu">
+    <div class="nav-container">
+        <div class="nav-left">
+            <div class="logo">SELLER PANEL</div>
         </div>
 
+        <div class="nav-center">
+            <a href="dashboard.html" class="active">จัดการสินค้า</a>
+            <a href="orders.html">จัดการคำสั่งซื้อ</a>
+            <a href="booking.html" class="btn-booking-nav">
+                <i class="fas fa-map-marker-alt"></i> จองพื้นที่ร้านค้า
+            </a>
+            <a href="analytics.html">วิเคราะห์การขาย</a>
+        </div>
+
+        <div class="nav-right">
+            <div class="noti-container">
+                <a href="javascript:void(0)" onclick="toggleNoti()" class="noti-link">
+                    <img src="assets/images/notification.png" alt="Notification">
+                    <span id="notiCount" class="badge" style="display:none;">0</span>
+                </a>
+
+                <div id="notiDropdown" class="noti-dropdown">
+                    <div class="noti-header">
+                        <span>การแจ้งเตือน</span>
+                        <a href="javascript:void(0)" onclick="markAllAsRead()"
+                        style="font-size: 11px; color: #3498db; text-decoration: none;">
+                        อ่านทั้งหมด
+                        </a>
+                    </div>
+                    <div id="notiList" class="noti-list">
+                        <p class="empty-noti">กำลังโหลด...</p>
+                    </div>
+                </div>
+            </div>
+
+            <a href="shop_profile.html" class="profile-link">
+                <span id="navShopName" class="nav-shop-name">กำลังโหลด...</span>
+                <div class="icon-btn">
+                    <img src="assets/images/person.png" alt="Profile">
+                </div>
+            </a>
+
+            <a href="#" onclick="logout()" class="icon-btn logout-btn">
+                <img src="assets/images/logout.png" alt="Logout">
+            </a>
+        </div>
+    </div>
+</nav>
+
+    <main class="content">
+        <div class="container wide">
+
+            <div class="action-group">
+                <a href="add_product.html" class="button pixel-text">
+                    <i class="fas fa-plus-circle"></i> เพิ่มสินค้าใหม่
+                </a>
+            </div>
+            
+            <h3>รายการสินค้าของฉัน</h3>
+
+            <div id="productGrid" class="product-grid">
+                </div>
+            <p id="productMessage" class="message"></p>
+        </div>
     </main>
 
+    <script src="js/auth.js"></script>
     <script src="js/main.js"></script>
-    <script>
-        window.onload = function () {
-            checkAuth();
-            displayShopName();
-            loadSellerProducts();
-        };
-    </script>
 
+    <script>
+        // ใช้ addEventListener เพื่อความเสถียรในการโหลด script หลายตัว
+        window.addEventListener('load', async function () {
+            // 1. ตรวจสอบสิทธิ์ (ป้องกัน Error จาก auth.js ด้วย SweetAlert ที่โหลดไว้ด้านบน)
+            if (typeof checkAuth === "function") checkAuth();
+
+            // 2. แสดงชื่อร้านค้าใน Navbar และเนื้อหาหลัก
+            if (typeof displayShopName === "function") {
+                await displayShopName();
+            }
+
+            // 3. โหลดรายการสินค้า
+            if (typeof loadSellerProducts === "function") {
+                loadSellerProducts();
+            }
+            
+            // 4. ระบบแจ้งเตือน
+            if (typeof fetchNotifications === "function") {
+                fetchNotifications();
+                setInterval(fetchNotifications, 60000);
+            }
+        });
+
+        function toggleNoti() {
+            const dropdown = document.getElementById('notiDropdown');
+            dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.noti-link') && !event.target.closest('.noti-dropdown')) {
+                const dropdown = document.getElementById('notiDropdown');
+                if (dropdown) dropdown.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>

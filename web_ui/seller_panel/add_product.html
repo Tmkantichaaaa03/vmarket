@@ -1,32 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>Add New Product</title>
-    <link rel="stylesheet" href="../seller_panel/css/add_product.css">
+    <title>เพิ่มสินค้าใหม่เข้าสู่ระบบ</title>
 
-    <style>
-        textarea { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
-        .form-group { margin-bottom: 15px; }
-    </style>
+    <link rel="stylesheet" href="css/add_product.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-    <nav class="top-menu pixel-text">
-        <div class="logo">SELLER PANEL</div>
-        <ul>
-            <li><a href="dashboard.html" class="active">จัดการสินค้า</a></li>
-            <li><a href="orders.html">จัดการคำสั่งซื้อ</a></li>
-            <li><a href="#" onclick="logout()" class="logout">ออกจากระบบ</a></li>
-        </ul>
-    </nav>
 
-    <div class="content">
-    <div class="container add-product" style="width: 520px;">
+<div class="content-wrapper">
 
-        <h2 class="pixel-title">เพิ่มสินค้าใหม่</h2>
-        <p class="shop-name">
-            ร้านค้า: <strong id="shopNameDisplay"></strong>
-        </p>
+    <div class="add-product-container">
+
+        <h2 class="page-title">เพิ่มสินค้าใหม่</h2>
 
         <form id="addProductForm">
 
@@ -46,13 +33,8 @@
             </div>
 
             <div class="form-group">
-                <label>รูปสินค้าเพิ่มเติม (สำหรับ 3D)</label>
+                <label>รูปภาพสินค้าเพิ่มเติม</label>
                 <input type="file" id="detailImages" accept="image/*" multiple required>
-            </div>
-
-            <div class="form-group">
-                <label>ไฟล์โมเดล 3D (ถ้ามี)</label>
-                <input type="file" id="model3DFile" accept=".glb,.gltf">
             </div>
 
             <div class="form-group">
@@ -66,27 +48,29 @@
             </div>
 
             <button type="submit" class="submit-btn">
-                ลงขายสินค้า (รอการอนุมัติจากแอดมิน)
+                บันทึกและส่งอนุมัติ
             </button>
 
-            <div id="addProductMessage" class="message"></div>
         </form>
+<div id="addProductMessage" style="margin-top:10px;font-size:14px;"></div>
 
-        <div class="back-links">
+        <div class="back-section">
             <a href="dashboard.html">← กลับไปหน้ารายการสินค้า</a>
         </div>
 
     </div>
+
 </div>
 
-    <script src="js/main.js"></script>
-    <script>
-        // เมื่อหน้าโหลด ให้เรียกใช้ฟังก์ชันตรวจสอบสิทธิ์และเพิ่ม Logic การส่งฟอร์ม
-        window.onload = function() {
-            checkAuth();
-            displayShopName();
-            setupAddProductListener(); // ฟังก์ชันนี้จะถูกเพิ่มใน main.js
-        };
-    </script>
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+window.onload = function() {
+    if (typeof checkAuth === "function") checkAuth();
+    if (typeof displayShopName === "function") displayShopName();
+};
+</script>
+
 </body>
 </html>

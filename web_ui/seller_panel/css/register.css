@@ -1,124 +1,145 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Chakra+Petch:wght@400;600&display=swap');
-
+/* ตั้งค่าฟอนต์หลัก */
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
+    font-family: 'Kanit', sans-serif;
 }
 
-/* ===== Base ===== */
 body {
-    margin: 0;
-    min-height: 100vh;
-    background-color: #1e1e1e;
+    background-color: #e2eff5;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Chakra Petch', 'Press Start 2P', monospace;
-    color: #e0e0e0;
 }
 
-/* ===== Container ===== */
-.container {
-    background-color: #2b2b2b;
-    border: 3px solid #5a5a5a;
-    border-radius: 8px;
-    padding: 32px;
-    width: 420px;
-    box-shadow: 4px 4px 0 #000;
+.register-card {
+    display: flex;
+    width: 900px; /* ขยายกว้างขึ้นนิดหน่อยเพราะฟิลด์เยอะขึ้น */
+    height: 600px; /* ขยายความสูงขึ้นให้พอดีกับฟอร์ม */
+    background-color: #fff;
+    border-radius: 40px;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.1);
+    overflow: hidden;
 }
 
-/* ===== Pixel Text Only for Titles ===== */
-.pixel-text {
-    font-family: 'DotGothic16', monospace;
-    text-shadow:
-        1px 0 0 #000,
-       -1px 0 0 #000,
-        0 1px 0 #000,
-        0 -1px 0 #000;
+/* ส่วนฟอร์ม (ย้ายมาฝั่งซ้าย) */
+.form-panel {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
 }
 
-/* ===== Title ===== */
-h2 {
-    text-align: center;
-    margin-bottom: 24px;
-    font-size: 22px;
-    color: #9fd3c7;
-    letter-spacing: 1.5px;
+.form-panel h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 25px;
 }
 
-/* ===== Form Labels ===== */
-label {
-    display: block;
-    font-size: 14px;
-    margin-bottom: 6px;
-    color: #dcdcdc;
-}
-
-/* ===== Inputs ===== */
-input,
-textarea {
+.input-group {
     width: 100%;
-    padding: 10px 12px;
-    margin-bottom: 16px;
-    background-color: #1a1a1a;
-    border: 1.5px solid #555;
-    border-radius: 6px;
-    color: #fff;
-    font-family: inherit;
-    font-size: 14px;
-    box-shadow: 1px 1px 0 #000;
-    transition: all 0.15s ease;
+    max-width: 320px;
+    position: relative;
+    margin-bottom: 12px;
 }
 
-input:focus,
-textarea:focus {
+.input-group i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    width: 20px;
+    text-align: center;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    background-color: #f4f4f4;
+    border: none;
+    border-radius: 12px;
     outline: none;
-    border-color: #9fd3c7;
-    box-shadow: 0 0 0 2px #000;
+    font-size: 0.9rem;
+    transition: 0.3s;
 }
 
-/* ===== Buttons ===== */
-button {
+.input-group input:focus {
+    background-color: #f0f0f0;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+}
+
+.btn-register-submit {
     width: 100%;
-    padding: 12px;
-    background-color: #3a6f5e;
-    border: 1.5px solid #9fd3c7;
-    border-radius: 6px;
-    color: #ffffff;
-    font-family: 'DotGothic16', monospace;
-    font-size: 14px;
-    letter-spacing: 1px;
+    max-width: 320px;
+    padding: 14px;
+    background: linear-gradient(to right, #243b55, #141e30);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
-    box-shadow: 2px 2px 0 #000;
-    transition: all 0.15s ease;
+    margin-top: 15px;
+    transition: 0.3s ease;
 }
 
-button:hover {
-    background-color: #4a8f7a;
+.btn-register-submit:hover {
+    transform: scale(1.03);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-button:active {
-    transform: translate(2px, 2px);
-    box-shadow: 1px 1px 0 #000;
-}
-
-/* ===== Message ===== */
-.message {
-    margin-top: 12px;
-    font-size: 13px;
+/* ส่วนสีฟ้า (ย้ายมาฝั่งขวา) */
+.side-panel {
+    flex: 1;
+    background: linear-gradient(135deg, #42d1ff 0%, #00bcff 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
     text-align: center;
-    color: #ffb3b3;
+    /* สลับฝั่งโค้งมาด้านซ้าย */
+    border-radius: 180px 0 0 180px; 
+    padding: 40px;
 }
 
-/* ===== Back Links ===== */
-.back-links {
-    display: block;
-    margin-top: 16px;
-    text-align: center;
-    color: #9fd3c7;
+.side-content h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.side-content p {
+    margin-bottom: 30px;
+    font-size: 0.95rem;
+    font-weight: 300;
+    opacity: 0.9;
+    line-height: 1.5;
+}
+
+.btn-login-outline {
+    display: inline-block;
+    padding: 10px 40px;
+    border: 2px solid white;
+    border-radius: 30px;
+    color: white;
     text-decoration: none;
-    font-size: 13px;
+    font-weight: 400;
+    transition: 0.3s ease;
 }
 
-.back-links:hover {
-    text-decoration: underline;
+.btn-login-outline:hover {
+    background: white;
+    color: #00bcff;
+}
+
+.message {
+    margin-top: 15px;
+    font-size: 0.85rem;
+    text-align: center;
 }

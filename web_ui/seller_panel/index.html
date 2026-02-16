@@ -1,29 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seller Panel Login</title>
-    <link rel="stylesheet" href="../seller_panel/css/index.css">
+    <title>V-Market Seller Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../seller_panel/css/style.css">
 </head>
 <body>
-    <div class="container" id="login-form">
-        <h2>เข้าสู่ระบบร้านค้า</h2>
-        <form id="loginForm">
-            <label for="loginUsername">ชื่อผู้ใช้:</label>
-            <input type="text" id="loginUsername" required>
+
+    <div class="container" id="container">
+    <div class="form-container sign-up-container">
+        <form id="registerForm">
+            <h1>สร้างบัญชีร้านค้า</h1>
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="regUsername" placeholder="ชื่อผู้ใช้งาน (ภาษาอังกฤษเท่านั้น)" required />
+            </div>
+            <small id="userError" class="error-text"></small>
+            <div class="input-group">
+                <i class="fas fa-store"></i>
+                <input type="text" id="regShopName" placeholder="ชื่อร้านค้า" required />
+            </div>
+            <div class="input-group">
+                <i class="fas fa-map-marker-alt"></i>
+                <input type="text" id="regAddress" placeholder="ที่อยู่ร้านค้า" required />
+            </div>
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="regEmail" placeholder="อีเมล" required />
+            </div>
+            <div class="input-group">
+                <i class="fas fa-phone"></i>
+                <input type="tel" id="regPhone" placeholder="เบอร์โทรศัพท์ร้านค้า" required />
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="regPassword" placeholder="รหัสผ่าน (อย่างน้อย 6 ตัว)" required />
+            </div>
+            <small id="passError" class="error-text"></small> <div class="input-group">
+                <i class="fas fa-check-double"></i>
+                <input type="password" id="regConfirmPassword" placeholder="ยืนยันรหัสผ่าน" required />
+            </div>
+            <small id="confirmError" class="error-text"></small>
             
-            <label for="loginPassword">รหัสผ่าน:</label>
-            <input type="password" id="loginPassword" required>
-            
-            <button type="submit">เข้าสู่ระบบ</button>
-            <div id="loginMessage" class="message"></div>
+            <button type="submit" class="btn-main">สมัครสมาชิก</button>
+            <div id="registerMessage" class="message" style="color: #d9534f; font-size: 0.85rem; margin-top: 10px;"></div>
         </form>
-        <p style="text-align: center; margin-top: 20px;">
-            <a href="register.html">ยังไม่มีบัญชี? สมัครร้านค้า</a>
-        </p>
     </div>
 
+    <div class="form-container sign-in-container">
+        <form id="loginForm">
+            <h1>เข้าสู่ระบบ</h1>
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="loginUsername" placeholder="Username" required />
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="loginPassword" placeholder="Password" required />
+            </div>
+            <a href="#" class="forgot">ลืมรหัสผ่าน?</a>
+            <button type="submit" class="btn-main">Login</button>
+            <div id="loginMessage" class="message"></div>
+        </form>
+    </div>
+
+    <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-panel overlay-left">
+                <h1>ยินดีต้อนรับ</h1>
+                <p>เริ่มต้นสร้างร้านค้าของคุณไปกับเรา</p><br>
+                <button class="btn-outline" id="signUp">สมัครสมาชิก</button>
+            </div>
+            <div class="overlay-panel overlay-right">
+                <h1>เริ่มสร้างธุรกิจ!</h1>
+                <p>หากคุณมีบัญชีอยู่แล้ว เข้าสู่ระบบได้ที่นี่</p><br>
+                <button class="btn-outline" id="signIn">เข้าสู่ระบบ</button>
+            </div>
+        </div>
+    </div>
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="js/auth.js"></script>
+    <script>
+
+        const signUpButton = document.getElementById('signUp');
+        const signInButton = document.getElementById('signIn');
+        const container = document.getElementById('container');
+
+        signUpButton.addEventListener('click', () => {
+            container.classList.add("right-panel-active");
+        });
+
+        signInButton.addEventListener('click', () => {
+            container.classList.remove("right-panel-active");
+        });
+    </script>
 </body>
 </html>

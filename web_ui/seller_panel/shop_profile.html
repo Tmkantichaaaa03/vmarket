@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ตั้งค่าร้านค้า - Seller Panel</title>
+    <link rel="stylesheet" href="../seller_panel/css/dashboard.css"> 
+    <style>
+        .profile-container { max-width: 800px; margin: 20px auto; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input, .form-group textarea { 
+            width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; 
+            background-color: #f9f9f9; cursor: not-allowed; /* สไตล์ตอนที่ยังกดแก้ไม่ได้ */
+        }
+        /* เมื่อเปิดโหมดแก้ไข ให้เปลี่ยนสีพื้นหลัง */
+        .form-group input:enabled, .form-group textarea:enabled {
+            background-color: #fff; cursor: text; border: 1px solid #3498db;
+        }
+        .preview-container { text-align: center; margin-bottom: 20px; position: relative; }
+        .preview-img { width: 150px; height: 150px; object-fit: cover; border-radius: 50%; border: 2px solid #eee; }
+        
+        .btn-edit { background: #3498db; color: white; padding: 10px 25px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        .btn-save { background: #28a745; color: white; padding: 10px 25px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; display: none; }
+        .btn-cancel { background: #e74c3c; color: white; padding: 10px 25px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; display: none; margin-left: 10px; }
+        
+        #shopImage { display: none; margin-top: 10px; } /* ซ่อน input file ไว้ก่อน */
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <h2 class="pixel-text">โปรไฟล์ร้านค้า</h2>
+        <hr>
+        
+        <form id="shopProfileForm">
+            <div class="preview-container">
+                <img id="profilePreview" src="../assets/images/default-shop.png" class="preview-img">
+                <br>
+                <input type="file" id="shopImage" name="profile_image" accept="image/*">
+                <p id="editPhotoHint" style="display:none; color: #7f8c8d; font-size: 0.9em;">คลิกเพื่อเปลี่ยนรูปโลโก้</p>
+            </div>
+
+            <div class="form-group">
+                <label>ชื่อร้านค้า</label>
+                <input type="text" id="shopName" name="shop_name" required disabled>
+            </div>
+
+            <div class="form-group">
+                <label>เบอร์โทรศัพท์</label>
+                <input type="text" id="shopPhone" name="phone_number" disabled>
+            </div>
+
+            <div class="form-group">
+                <label>ที่อยู่</label>
+                <textarea id="shopAddress" name="address" rows="2" disabled></textarea>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <div class="form-group" style="flex: 1;">
+                    <label>จังหวัด</label>
+                    <input type="text" id="shopCity" name="city" disabled>
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>รหัสไปรษณีย์</label>
+                    <input type="text" id="shopPostalCode" name="postal_code" disabled>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>รายละเอียดร้านค้า</label>
+                <textarea id="shopDescription" name="description" rows="4" disabled></textarea>
+            </div>
+
+            <div id="actionButtons" style="margin-top: 20px;">
+                <button type="button" id="btnEdit" onclick="toggleEditMode(true)" class="btn-edit">แก้ไขโปรไฟล์</button>
+                <button type="submit" id="btnSave" class="btn-save">บันทึกข้อมูล</button>
+                <button type="button" id="btnCancel" onclick="toggleEditMode(false)" class="btn-cancel">ยกเลิก</button>
+            </div>
+            
+            <p id="profileMessage" style="margin-top: 10px; font-weight: bold;"></p>
+        </form>
+        
+        <hr>
+        <a href="dashboard.html" style="color: #34495e; text-decoration: none; font-size: 0.9em;">← กลับหน้าแดชบอร์ด</a>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // เมื่อเปิดหน้าเว็บครั้งแรก
+        window.onload = function() {
+            if (typeof checkAuth === "function") checkAuth();
+            if (typeof loadShopProfile === "function") {
+                loadShopProfile(); // โหลดข้อมูลมาโชว์ (View Mode)
+            }
+        };
+
+        // ฟังก์ชันสลับโหมด แก้ไข / ดูอย่างเดียว
+        function toggleEditMode(isEdit) {
+            const form = document.getElementById('shopProfileForm');
+            const inputs = form.querySelectorAll('input, textarea');
+            const btnEdit = document.getElementById('btnEdit');
+            const btnSave = document.getElementById('btnSave');
+            const btnCancel = document.getElementById('btnCancel');
+            const shopImage = document.getElementById('shopImage');
+            const photoHint = document.getElementById('editPhotoHint');
+
+            inputs.forEach(input => {
+                if (input.id !== 'shopImage') {
+                    input.disabled = !isEdit;
+                }
+            });
+
+            if (isEdit) {
+                btnEdit.style.display = 'none';
+                btnSave.style.display = 'inline-block';
+                btnCancel.style.display = 'inline-block';
+                shopImage.style.display = 'inline-block';
+                photoHint.style.display = 'block';
+            } else {
+                btnEdit.style.display = 'inline-block';
+                btnSave.style.display = 'none';
+                btnCancel.style.display = 'none';
+                shopImage.style.display = 'none';
+                photoHint.style.display = 'none';
+                // ถ้ากดยกเลิก ให้โหลดข้อมูลเดิมกลับมา
+                loadShopProfile();
+            }
+        }
+
+        // Preview รูปภาพเมื่อเลือกไฟล์
+        document.getElementById('shopImage').onchange = evt => {
+            const [file] = document.getElementById('shopImage').files;
+            if (file) {
+                document.getElementById('profilePreview').src = URL.createObjectURL(file);
+            }
+        };
+
+        // Submit สำเร็จ ให้กลับไปโหมด View
+        const originalSetupListener = setupShopProfileListener;
+        if (typeof originalSetupListener === "function") {
+    
+        }
+    </script>
+</body>
+</html>

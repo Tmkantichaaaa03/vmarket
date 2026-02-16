@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายการคำสั่งซื้อ - VMARKET SELLER PANEL</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../seller_panel/css/dashboard.css">
+    <link rel="stylesheet" href="../seller_panel/css/orders.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="top-menu">
+    <div class="nav-container">
+        <div class="nav-left">
+            <div class="logo">SELLER PANEL</div>
+        </div>
+        <div class="nav-center">
+            <a href="dashboard.html">จัดการสินค้า</a>
+            <a href="orders.html" class="active">จัดการคำสั่งซื้อ</a>
+            <a href="analytics.html">วิเคราะห์การขาย</a>
+        </div>
+        <div class="nav-right">
+            <a href="shop_profile.html" class="profile-link">
+                <div class="icon-btn">
+                    <img src="assets/images/person.png">
+                </div>
+                <span id="navShopName">กำลังโหลด...</span>
+            </a>
+            <a href="#" onclick="logout()" class="icon-btn logout-btn">
+                <img src="assets/images/logout.png">
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- ================= CONTENT ================= -->
+<main class="content">
+
+    <div class="container wide">
+
+        <div class="order-layout">
+
+            <!-- ===== LEFT SIDE : ORDER TABLE ===== -->
+            <div class="order-card">
+
+                <h2 class="page-title fancy-title">
+                    <i class="fas fa-box-open"></i>
+                    รายการคำสั่งซื้อทั้งหมด
+                </h2>
+
+                <div class="table-responsive">
+                    <table id="orderTable">
+                        <thead>
+                            <tr>
+                                <th>หมายเลขคำสั่งซื้อ</th>
+                                <th>วันที่</th>
+                                <th>จำนวน</th>
+                                <th>ยอดรวม</th>
+                                <th>การชำระเงิน</th>
+                                <th>สถานะ</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="orderList"></tbody>
+                    </table>
+                </div>
+
+                <div id="orderMessage" class="empty-message"></div>
+
+            </div>
+
+            <!-- ===== RIGHT SIDE : SLIDE PANEL ===== -->
+            <div id="orderDetailPanel" class="detail-panel">
+
+                <div class="detail-header">
+                    <h3>รายละเอียดคำสั่งซื้อ</h3>
+                    <button onclick="closeDetailPanel()">✕</button>
+                </div>
+
+                <div class="detail-content">
+                    <p><b>หมายเลขคำสั่งซื้อ:</b> <span id="detOrderId"></span></p>
+                    <p><b>ชื่อลูกค้า:</b> <span id="detCustName"></span></p>
+                    <p><b>เบอร์:</b> <span id="detCustPhone"></span></p>
+                    <p><b>ที่อยู่:</b> <span id="detCustAddr"></span></p>
+
+                    <hr>
+
+                    <h4>รายการสินค้า</h4>
+                    <div id="detItemList"></div>
+
+                    <h3 class="total-box">
+                        ยอดรวมสุทธิ: <span id="detTotal"></span> บาท
+                    </h3>
+                    <hr>
+
+                    <p>
+                        <b>สถานะการชำระเงิน:</b>
+                        <span id="detPaymentStatus"></span>
+                    </p>
+
+                    <p id="slipSection" style="display:none;">
+                        <b>หลักฐานการชำระเงิน</b>
+                        <br>
+                        <a id="viewSlipBtn" href="#" target="_blank" class="view-slip-btn">
+                            ตรวจสอบหลักฐานการชำระเงิน
+                        </a>
+                    </p>
+
+                    <div id="actionSection">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+<!-- ================= SCRIPTS ================= -->
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+window.addEventListener('load', async function() {
+
+    if (typeof checkAuth === "function") checkAuth();
+    if (typeof displayShopName === "function") await displayShopName();
+    if (typeof loadSellerOrders === "function") loadSellerOrders();
+});
+
+/* ================= OPEN DETAIL ================= */
+window.viewDetails = async function(orderId) {
+
+    currentOrderId = orderId;
+
+    document.getElementById("orderDetailPanel").classList.add("open");
+    document.querySelector(".order-layout").classList.add("shift");
+
+    try {
+
+        const response = await fetch(
+            `${BASE_API_URL}orders/get_order_details.php?order_id=${orderId}`
+        );
+
+        const result = await response.json();
+
+        if (!result.success) return;
+
+        const d = result.data;
+
+        document.getElementById('detOrderId').innerText = d.order_id;
+        document.getElementById('detCustName').innerText = d.customer_name;
+        document.getElementById('detCustPhone').innerText = d.phone_number;
+        document.getElementById('detCustAddr').innerText =
+            `${d.address} ${d.city} ${d.postal_code}`;
+
+        document.getElementById('detTotal').innerText =
+            parseFloat(d.total_amount).toLocaleString();
+
+        /* ===== PAYMENT ===== */
+
+        const payEl = document.getElementById("detPaymentStatus");
+        const paymentStatus = (d.payment_status || "").toLowerCase().trim();
+
+        if (paymentStatus === "paid") {
+            payEl.innerText = "ชำระเงินแล้ว";
+            payEl.className = "pay-paid";
+        } else {
+            payEl.innerText = "ชำระเงินปลายทาง";
+            payEl.className = "pay-cod";
+        }
+
+        /* ===== SLIP ===== */
+
+const slipSection = document.getElementById("slipSection");
+const slipBtn = document.getElementById("viewSlipBtn");
+
+if (d.payment_slip && d.payment_slip !== "") {
+
+    slipBtn.href = `assets/slips/${d.payment_slip}`;
+    slipSection.style.display = "block";
+
+} else {
+
+    slipSection.style.display = "none";
+
+}
+
+        /* ===== STATUS + BUTTONS ===== */
+
+        const actionSection = document.getElementById("actionSection");
+
+        let buttonsHTML = "";
+
+const status = (d.status || "").trim();
+
+if (status === "รอการยืนยัน") {
+
+    buttonsHTML = `
+        <button onclick="updateOrderStatus('confirmed')" class="btn-confirm">
+            ยืนยันคำสั่งซื้อ
+        </button>
+        <button onclick="updateOrderStatus('cancelled')" class="btn-cancel">
+            ยกเลิก
+        </button>
+    `;
+
+} 
+else if (status === "กำลังจัดส่ง") {
+
+    buttonsHTML = `
+        <button onclick="updateOrderStatus('completed')" class="btn-complete">
+            จัดส่งสำเร็จ
+        </button>
+    `;
+
+} 
+else if (status === "จัดส่งสำเร็จ") {
+
+    buttonsHTML = `
+        <span class="success-label">
+            ✔ จัดส่งสำเร็จแล้ว
+        </span>
+    `;
+
+} 
+else if (status === "ยกเลิกออเดอร์") {
+
+    buttonsHTML = `
+        <span class="cancel-label">
+            ✖ ออเดอร์ถูกยกเลิกแล้ว
+        </span>
+    `;
+
+}
+
+
+        actionSection.innerHTML = buttonsHTML;
+
+        /* ===== ITEMS ===== */
+
+        document.getElementById('detItemList').innerHTML =
+            d.items.map(item => `
+                <div class="item-row">
+                    <span>${item.product_name}</span>
+                    <span>${item.quantity} x ${parseFloat(item.price).toLocaleString()}</span>
+                </div>
+            `).join('');
+
+    } catch (e) {
+        console.error(e);
+    }
+};
+
+
+</script>
+
+</body>
+</html>

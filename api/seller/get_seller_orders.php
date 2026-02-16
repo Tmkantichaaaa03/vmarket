@@ -20,18 +20,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     
     // Query ที่ซับซ้อน: ดึงคำสั่งซื้อทั้งหมดที่เกี่ยวข้องกับสินค้าที่มาจาก seller_id นี้
     // ต้อง Group by order_id เพื่อไม่ให้คำสั่งซื้อซ้ำซ้อนกันในรายการหลัก
-    $sql = "SELECT 
-                o.order_id, 
-                o.total_amount, 
-                o.status, 
-                o.created_at,
-                COUNT(oi.item_id) AS total_items_count
-            FROM orders o
-            INNER JOIN order_items oi ON o.order_id = oi.order_id
-            INNER JOIN products p ON oi.product_id = p.product_id
-            WHERE p.seller_id = $seller_id
-            GROUP BY o.order_id
-            ORDER BY o.created_at DESC";
+$sql = "SELECT 
+            o.order_id, 
+            o.total_amount, 
+            o.status, 
+            o.created_at,
+            o.payment_status,
+            o.payment_slip,
+            COUNT(oi.item_id) AS total_items_count
+        FROM orders o
+        INNER JOIN order_items oi ON o.order_id = oi.order_id
+        INNER JOIN products p ON oi.product_id = p.product_id
+        WHERE p.seller_id = $seller_id
+        GROUP BY o.order_id
+        ORDER BY o.created_at DESC";
+
 
     $result = $conn->query($sql);
     $orders_array = array();
@@ -41,13 +44,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         while($row = $result->fetch_assoc()) {
             
             // วนลูปดึงข้อมูลคำสั่งซื้อหลัก
-            array_push($orders_array, array(
-                "order_id" => $row['order_id'],
-                "total_amount" => $row['total_amount'],
-                "status" => $row['status'],
-                "created_at" => $row['created_at'],
-                "total_items_count" => $row['total_items_count']
-            ));
+array_push($orders_array, array(
+    "order_id" => $row['order_id'],
+    "total_amount" => $row['total_amount'],
+    "status" => $row['status'],
+    "created_at" => $row['created_at'],
+    "payment_status" => $row['payment_status'],
+    "payment_slip" => $row['payment_slip'],
+    "total_items_count" => $row['total_items_count']
+));
+
         }
 
         // ส่งผลลัพธ์ความสำเร็จกลับไป

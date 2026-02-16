@@ -19,51 +19,74 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
     
     $order_id = (int)$_GET['order_id']; 
+
+    // --- ดึงข้อมูลลูกค้า ---
+$sql_order = "SELECT 
+                o.order_id, 
+                o.total_amount, 
+                o.status,
+                o.payment_status,
+                o.payment_slip,
+                c.name AS customer_name, 
+                c.phone_number, 
+                c.address, 
+                c.city, 
+                c.postal_code
+              FROM orders o
+              INNER JOIN customers c ON o.customer_id = c.customer_id
+              WHERE o.order_id = $order_id";
     
-    // Query: ดึงรายละเอียดรายการสินค้าใน order_items โดย JOIN กับ products เพื่อดึงชื่อสินค้า
-    $sql = "SELECT 
-                oi.product_id, 
-                p.name AS product_name, 
-                oi.quantity, 
-                oi.price AS unit_price, 
-                oi.subtotal
-            FROM order_items oi
-            INNER JOIN products p ON oi.product_id = p.product_id
-            WHERE oi.order_id = $order_id";
+    $result_order = $conn->query($sql_order);
+    if (!$result_order) {
+        die(json_encode(array("success" => false, "message" => "SQL Error (Order): " . $conn->error)));
+    }
+    $order_info = $result_order->fetch_assoc();
 
-    $result = $conn->query($sql);
-    $items_array = array();
+    if ($order_info) {
+        // Query: ดึงรายละเอียดรายการสินค้าใน order_items โดย JOIN กับ products เพื่อดึงชื่อสินค้า
+        // หมายเหตุ: ใช้ p.name ตามโครงสร้างจริงใน virtual_marketplace (1).sql
+        $sql = "SELECT 
+                    oi.product_id, 
+                    p.name AS product_name, 
+                    oi.quantity, 
+                    oi.price, 
+                    oi.subtotal
+                FROM order_items oi
+                INNER JOIN products p ON oi.product_id = p.product_id
+                WHERE oi.order_id = $order_id";
 
-    if ($result && $result->num_rows > 0) {
-        
+        $result = $conn->query($sql);
+        if (!$result) {
+            die(json_encode(array("success" => false, "message" => "SQL Error (Items): " . $conn->error)));
+        }
+
+        $items_array = array();
         while($row = $result->fetch_assoc()) {
-            
-            // วนลูปดึงข้อมูลรายการสินค้า
             array_push($items_array, array(
                 "product_id" => $row['product_id'],
                 "product_name" => $row['product_name'],
                 "quantity" => $row['quantity'],
-                "unit_price" => $row['unit_price'],
+                "price" => $row['price'], // ปรับจาก unit_price เป็น price ให้ตรงกับ JS
                 "subtotal" => $row['subtotal']
             ));
         }
+
+        $order_info['items'] = $items_array;
 
         // ส่งผลลัพธ์ความสำเร็จกลับไป
         http_response_code(200); // 200 OK
         echo json_encode(array(
             "success" => true, 
             "message" => "Order details retrieved successfully for order ID $order_id.",
-            "data" => $items_array
+            "data" => $order_info
         ));
 
     } else {
-        // ไม่พบรายละเอียดสินค้า
         http_response_code(404);
-        echo json_encode(array("success" => false, "message" => "No items found for this order ID."));
+        echo json_encode(array("success" => false, "message" => "No order found for this ID."));
     }
     
 } else {
-    // จัดการกรณี Method ไม่ถูกต้อง (405)
     http_response_code(405);
     echo json_encode(array("success" => false, "message" => "Method not allowed."));
 }

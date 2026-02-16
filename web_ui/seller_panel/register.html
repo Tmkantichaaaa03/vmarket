@@ -1,37 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seller Registration</title>
-    <link rel="stylesheet" href="../seller_panel/css/register.css">
+    <title>ระบบจัดการร้านค้า - สมัครสมาชิก</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../seller_panel/css/style.css">
 </head>
 <body>
-    <div class="container" id="register-form">
-        <h2>สมัครสมาชิกร้านค้า</h2>
-        <form id="registerForm">
-            <label for="regShopName">ชื่อร้าน:</label>
-            <input type="text" id="regShopName" required>
 
-            <label for="regAddress">ที่อยู่:</label>
-            <input type="text" id="regAddress" required>
-
-            <label for="regUsername">ชื่อผู้ใช้:</label>
-            <input type="text" id="regUsername" required>
+    <div class="main-wrapper">
+        <div class="register-card">
             
-            <label for="regEmail">อีเมล:</label>
-            <input type="text" id="regEmail" required>
+            <div class="form-panel">
+                <h2>สร้างบัญชีร้านค้า</h2>
+                <form id="registerForm">
+                    <div class="input-group">
+                        <i class="fas fa-store"></i>
+                        <input type="text" id="regShopName" placeholder="ชื่อร้านค้า" required>
+                    </div>
 
-            <label for="regPassword">รหัสผ่าน:</label>
-            <input type="password" id="regPassword" required>
-            
-            <button type="submit">สมัครร้านค้า</button>
-            <div id="registerMessage" class="message"></div>
-        </form>
-        <p style="text-align: center; margin-top: 20px;">
-            <a href="index.html" class="back-links">กลับไปที่หน้าเข้าสู่ระบบ</a>
-        </p>
+                    <div class="input-group">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text" id="regAddress" placeholder="ที่อยู่ร้านค้า" required>
+                    </div>
+
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="regUsername" placeholder="ชื่อผู้ใช้งาน" required>
+                    </div>
+
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="regEmail" placeholder="อีเมล" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="regPassword" placeholder="รหัสผ่าน" required>
+                    </div>
+                    
+                    <button type="submit" class="btn-register-submit">สมัครร้านค้า</button>
+                </form>
+                <div id="registerMessage" class="message"></div>
+            </div>
+
+            <div class="side-panel">
+                <div class="side-content">
+                    <h1>เริ่มสร้างธุรกิจของคุณได้เลย!</h1>
+                    <p>หากคุณมีบัญชีอยู่แล้ว สามารถเข้าสู่ระบบได้ที่นี่</p>
+                    <a href="index.html" class="btn-login-outline">เข้าสู่ระบบ</a>
+                </div>
+            </div>
+
+        </div>
     </div>
+
     <script src="js/auth.js"></script>
 </body>
 </html>
